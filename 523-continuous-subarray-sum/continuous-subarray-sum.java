@@ -1,33 +1,18 @@
-import java.util.HashMap;
-
 class Solution {
     public boolean checkSubarraySum(int[] nums, int k) {
-        // HashMap to store the remainder and the corresponding index
-        HashMap<Integer, Integer> map = new HashMap<>();
-        // Initialize the map with remainder 0 at index -1
-        map.put(0, -1);
-        int runningSum = 0;
-        
-        for (int i = 0; i < nums.length; i++) {
-            runningSum += nums[i];
-            int remainder = runningSum % k;
-            
-            // Adjust remainder to handle negative values of k
-            if (remainder < 0) {
-                remainder += k;
+        int [] ans=new int[nums.length];
+         ans[0]=nums[0];
+         for(int i=1;i<nums.length;i++){
+            ans[i]=ans[i-1]+nums[i];
+         }
+        Map<Integer,Integer> a=new HashMap<>();
+        a.put(0,-1);
+         for(int i=0;i<ans.length;i++){
+            if(a.containsKey(ans[i] % k)){
+                if(i-a.get(ans[i] % k) >=2) return true;
             }
-            
-            if (map.containsKey(remainder)) {
-                // Check if the subarray length is at least 2
-                if (i - map.get(remainder) > 1) {
-                    return true;
-                }
-            } else {
-                // Store the first occurrence of this remainder
-                map.put(remainder, i);
-            }
-        }
-        
-        return false;
+            else a.put(ans[i]% k ,i);
+         }
+         return false;
     }
 }
