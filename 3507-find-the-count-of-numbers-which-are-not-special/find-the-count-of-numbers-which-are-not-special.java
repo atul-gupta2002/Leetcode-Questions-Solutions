@@ -1,22 +1,39 @@
 class Solution {
-    public boolean isPrime(int val) {
-        if (val < 2) return false;
-        for (int i = 2; i * i <= val; i++) {
-            if (val % i == 0) {
-                return false;
+   public List<Integer> sieveOfEratosthenes(int n) {
+        boolean[] isPrime = new boolean[n + 1];
+        for (int i = 2; i <= n; i++) {
+            isPrime[i] = true;
+        }
+
+        for (int p = 2; p * p <= n; p++) {
+            if (isPrime[p]) {
+                for (int i = p * p; i <= n; i += p) {
+                    isPrime[i] = false;
+                }
             }
         }
-        return true;
+
+        List<Integer> primes = new ArrayList<>();
+        for (int i = 2; i <= n; i++) {
+            if (isPrime[i]) {
+                primes.add(i);
+            }
+        }
+        return primes;
     }
 
     public int nonSpecialCount(int l, int r) {
+        int sqrtR = (int) Math.sqrt(r);
+        List<Integer> primes = sieveOfEratosthenes(sqrtR);
         int cnt = 0;
-        for (int i = 2; i * i <= r; i++) {
-            if (isPrime(i)) {
-                int sq = i * i;
-                if (sq >= l && sq <= r) cnt++;
+
+        for (int prime : primes) {
+            int sq = prime * prime;
+            if (sq >= l && sq <= r) {
+                cnt++;
             }
         }
+
         return (r - l + 1) - cnt;
     }
 }
