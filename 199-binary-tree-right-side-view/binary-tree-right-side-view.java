@@ -14,35 +14,22 @@
  * }
  */
 class Solution {
+    int visited=-1;
     public List<Integer> rightSideView(TreeNode root) {
         List<Integer> result = new ArrayList<>();
-
-    if (root == null) {
-      return result;
+        rightSum(root,result,0);
+        return result;       
     }
 
-    Queue<TreeNode> queue = new LinkedList<>();
-    queue.add(root);
-
-    while (!queue.isEmpty()) {
-      int levelSize = queue.size();
-
-      for (int i=0; i < levelSize; i++) {
-        TreeNode currentNode = queue.poll();
-
-        if (i == levelSize - 1) {
-          result.add(currentNode.val);
+    public void rightSum(TreeNode root,List<Integer> ll,int curr){
+        if(root==null){
+            return;
         }
-        
-        if (currentNode.left != null) {
-          queue.add(currentNode.left);
+        if(curr>visited){
+            ll.add(root.val);
+            visited=curr;
         }
-        if (currentNode.right != null) {
-          queue.add(currentNode.right);
-        }
-      }
-    }
-    return result;
-        
+        rightSum(root.right,ll,curr+1);
+        rightSum(root.left,ll,curr+1);
     }
 }
