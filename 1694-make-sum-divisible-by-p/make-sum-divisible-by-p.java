@@ -1,25 +1,29 @@
 class Solution {
     public int minSubarray(int[] nums, int p) {
-    int sum = 0;    
-    for(int x : nums)
-    sum = (sum + x)%p;
-  
-    int mod = sum%p; 
-    if(mod==0)
-    return 0;
+        int sum=0;
+        for(int i=0;i<nums.length;i++){
+            sum=(sum+nums[i])%p;
+        }
+        int rem=sum%p;
+        if(rem==0){
+            return 0;
+        }
+        int res = nums.length;
+        int curSum = 0;
+        Map<Integer, Integer> remainToIdx = new HashMap<>();
+        remainToIdx.put(0, -1);
 
-    int ans = nums.length;
-    HashMap<Integer, Integer>hm = new HashMap<>();
-    hm.put(0, -1);
-    int currSumMod = 0;
-    for(int i=0; i<nums.length; i++)
-    {
-      currSumMod = (currSumMod+nums[i])%p;
-      int neededMod = (currSumMod - mod + p)%p;
-      if(hm.containsKey(neededMod))
-      ans = Math.min(ans, i-hm.get(neededMod));
-      hm.put(currSumMod, i);
-    }
-     return ans==nums.length ? -1 : ans;
+        for (int i = 0; i < nums.length; i++) {
+            curSum = (curSum + nums[i]) % p;
+            int prefix = (curSum - rem + p) % p;
+            
+            if (remainToIdx.containsKey(prefix)) {
+                int length = i - remainToIdx.get(prefix);
+                res = Math.min(res, length);
+            }
+
+            remainToIdx.put(curSum, i);
+        }
+        return res == nums.length ? -1 : res;
     }
 }
