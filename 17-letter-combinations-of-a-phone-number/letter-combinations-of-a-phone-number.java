@@ -1,30 +1,28 @@
-import java.util.ArrayList;
-import java.util.List;
+class Solution {
+    private final String[] map;
 
-public class Solution {
-    static String[] digitMapping = {"", "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
-    static int count = 0;
-
-    public static List<String> letterCombinations(String digits) {
-        List<String> result = new ArrayList<>();
-        if (digits == null || digits.length() == 0) {
-            return result;
-        }
-        generateCombinations(digits, 0, "", result);
-        return result;
+    public Solution() {
+        map = new String[]{"", "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
     }
 
-    public static void generateCombinations(String digits, int index, String current, List<String> result) {
+    private void helper(String digits, List<String> ans, int index, String current) {
         if (index == digits.length()) {
-            result.add(current);
+            ans.add(current);
             return;
         }
-
-        char digit = digits.charAt(index);
-        String mapping = digitMapping[digit - '0'];
-
-        for (int i = 0; i < mapping.length(); i++) {
-            generateCombinations(digits, index + 1, current + mapping.charAt(i), result);
+        String s = map[digits.charAt(index) - '0'];
+        for (int i = 0; i < s.length(); i++) {
+            helper(digits, ans, index + 1, current + s.charAt(i));
         }
+    }
+    public List<String> letterCombinations(String digits) {
+        List<String> ans = new ArrayList<>(); 
+      
+        if (digits.length() == 0) {
+            return ans;
+        }
+        
+        helper(digits, ans, 0, "");
+        return ans; 
     }
 }
