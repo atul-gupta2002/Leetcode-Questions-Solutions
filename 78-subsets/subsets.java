@@ -18,7 +18,7 @@ class Solution {
         list.add(nums[startIndex]);
         Helper(list,nums,startIndex+1);
 
-        list.remove(list.size()-1);
+        list.remove(list.size()-1); //backtrakcing
 
         Helper(list,nums,startIndex+1);
     }
