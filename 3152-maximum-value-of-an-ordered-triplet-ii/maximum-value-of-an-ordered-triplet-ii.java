@@ -19,7 +19,7 @@ class Solution {
         for (int i = 1; i < n - 1; i++) {
             long left = leftMax[i - 1];
              long right = rightMax[i + 1];
-            ans = Math.max(ans, (left - nums[i]) * right);
+            ans = Math.max(ans, (long)(left - nums[i]) * right);
         }
 
         return ans;
