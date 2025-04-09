@@ -9,11 +9,11 @@ class Solution {
         }
         int target=totalSum/2;
 
-        boolean[] dp = new boolean[target+1];
+        boolean[] dp = new boolean[10001];
         dp[0]=true;
 
         for(int num:nums){
-            for(int i=target;i>=num;i--){
+            for(int i=10000;i>=num;i--){
                 dp[i]=dp[i] || dp[i-num];
             }
         }
