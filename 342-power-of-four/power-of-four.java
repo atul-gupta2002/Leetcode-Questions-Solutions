@@ -1,10 +1,6 @@
 class Solution {
     public boolean isPowerOfFour(int n) {
-        for (int i = 0; Math.pow(4, i) <= n; i++) { 
-            if (n == Math.pow(4, i)) {
-                return true;
-            }
-        }
-        return false;
+        // Check positive, power of 2, and correct position of '1' bit
+        return n > 0 && (n & (n - 1)) == 0 && (n - 1) % 3 == 0;
     }
 }
